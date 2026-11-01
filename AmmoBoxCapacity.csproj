@@ -1,0 +1,57 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <AssemblyName>AmmoBoxCapacity</AssemblyName>
+    <RootNamespace>AmmoBoxCapacity</RootNamespace>
+    <Version>1.0.0</Version>
+    <!-- Version attributes live in src/Plugin.cs -->
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+
+    <!-- Point this at your Apocalypter install, or pass -p:GamePath="..." to dotnet build -->
+    <GamePath Condition="'$(GamePath)' == ''">C:\Program Files (x86)\Steam\steamapps\common\Apocalypter</GamePath>
+    <ManagedPath>$(GamePath)\Apocalypter_Data\Managed</ManagedPath>
+    <BepInExPath>$(GamePath)\BepInEx\core</BepInExPath>
+  </PropertyGroup>
+
+  <!-- Diagnostics (F9/F10 dumps, action logging) are for testing: compiled into Debug builds only -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <DefineConstants>$(DefineConstants);DIAGNOSTICS</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="src\**\*.cs" />
+    <Compile Remove="src\Diagnostics.cs" Condition="'$(Configuration)' != 'Debug'" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- Game and loader assemblies: referenced, never copied to the output -->
+  <ItemGroup>
+    <Reference Include="BepInEx"><HintPath>$(BepInExPath)\BepInEx.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="0Harmony"><HintPath>$(BepInExPath)\0Harmony.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Assembly-CSharp"><HintPath>$(ManagedPath)\Assembly-CSharp.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PlayMaker"><HintPath>$(ManagedPath)\PlayMaker.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine"><HintPath>$(ManagedPath)\UnityEngine.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(ManagedPath)\UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.PhysicsModule"><HintPath>$(ManagedPath)\UnityEngine.PhysicsModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.InputLegacyModule"><HintPath>$(ManagedPath)\UnityEngine.InputLegacyModule.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+
+  <!-- Release builds: release\AmmoBoxCapacity\ gets the DLL, README, LICENSE and CHANGELOG, ready for BepInEx\plugins -->
+  <Target Name="PackRelease" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+    <MakeDir Directories="$(MSBuildProjectDirectory)\release\AmmoBoxCapacity" />
+    <Copy SourceFiles="$(OutputPath)AmmoBoxCapacity.dll;README.md;LICENSE;CHANGELOG.md" DestinationFolder="$(MSBuildProjectDirectory)\release\AmmoBoxCapacity" />
+  </Target>
+
+  <!-- Optional: copy the built DLL straight into the game's plugins folder -->
+  <Target Name="CopyToPlugins" AfterTargets="Build" Condition="'$(CopyToGame)' == 'true'">
+    <MakeDir Directories="$(GamePath)\BepInEx\plugins\AmmoBoxCapacity" />
+    <Copy SourceFiles="$(OutputPath)AmmoBoxCapacity.dll;README.md" DestinationFolder="$(GamePath)\BepInEx\plugins\AmmoBoxCapacity" />
+  </Target>
+
+</Project>

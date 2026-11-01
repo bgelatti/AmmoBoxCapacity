@@ -1,0 +1,14 @@
+name: Feature request
+description: Sugira uma ideia ou melhoria.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: O que você gostaria?
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Por quê? Que problema isso resolve no jogo?

@@ -1,0 +1,68 @@
+name: Bug report
+description: Algo não funciona como esperado.
+labels: [bug]
+body:
+  - type: input
+    id: mod-version
+    attributes:
+      label: Versão do Ammo Box Capacity
+      placeholder: "1.0.0"
+    validations:
+      required: true
+  - type: input
+    id: game-version
+    attributes:
+      label: Versão do Apocalypter
+    validations:
+      required: true
+  - type: input
+    id: bepinex-version
+    attributes:
+      label: Versão do BepInEx
+      placeholder: "5.4.23"
+    validations:
+      required: true
+  - type: dropdown
+    id: caliber
+    attributes:
+      label: Calibre da caixa
+      options:
+        - 12 gauge
+        - 5.56mm
+        - 7.62mm
+        - .30-06
+        - Outro
+        - Não é de um calibre específico
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: O que aconteceu?
+      description: O que você esperava e o que aconteceu no lugar.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Passos para reproduzir
+      placeholder: |
+        1. MaxPerBox_556mm = 1000
+        2. Juntar uma caixa grande de 5.56 com 800 numa com 500
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: config
+    attributes:
+      label: Config
+      description: Conteúdo de `BepInEx\config\com.gelatti.apocalypter.ammoboxcapacity.cfg`.
+  - type: textarea
+    id: mods
+    attributes:
+      label: Outros mods instalados
+  - type: textarea
+    id: log
+    attributes:
+      label: LogOutput.log
+      description: Anexe ou cole `Apocalypter\BepInEx\LogOutput.log` (arraste o arquivo aqui).
