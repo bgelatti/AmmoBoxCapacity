@@ -1,77 +1,77 @@
 # Ammo Box Capacity 1.0.0
 
-Mod BepInEx 5 para **Apocalypter** que deixa você escolher quanta munição cabe nas **caixas de munição grandes** originais do jogo (`ammo_box_big_*`), com **limite rígido** por calibre.
+A BepInEx 5 mod for **Apocalypter** that lets you choose how much ammo fits in the game's original **big ammo boxes** (`ammo_box_big_*`), with a **hard limit** per caliber.
 
-## Como o jogo funciona sem o mod
+## How the game works without the mod
 
-- Uma caixa grande só aceita outra caixa (segurando uma caixa na mão e apertando **F**, "Transfer Ammo") enquanto tem **até 499** munições.
-- Quando aceita, ela recebe **a caixa da mão inteira**, sem cortar nada. Por isso algumas caixas ficam com um pouco mais de 500 (506, 548, 654...).
-- Com 500 ou mais, a caixa fica "cheia" e não aceita mais nada até baixar de 500.
-- O limite é **500 para todos os calibres** e vem das próprias caixas (FSM `AmmoStorage`). O mod lê esse valor do jogo enquanto ele roda.
+- A big box only accepts another box (hold a box in your hand and press **F**, "Transfer Ammo") while it holds **499 rounds or fewer**.
+- When it accepts, it takes **the whole box in your hand**, with nothing cut off. That is why some boxes end up a bit above 500 (506, 548, 654...).
+- At 500 or more the box is "full" and accepts nothing until it drops below 500.
+- The limit is **500 for every caliber** and comes from the boxes themselves (the `AmmoStorage` FSM). The mod reads this value from the game while it runs.
 
-## O que o mod faz
+## What the mod does
 
-- Troca o limite de 500 das caixas grandes pelo valor que você escolher.
-- **Limite rígido**: ao juntar caixas, só passa munição até o limite. **O que sobrar fica na caixa da mão**, que não some. Se a caixa da mão esvaziar, ela some como no jogo normal.
-- Caixas que já estão acima de 500 (por exemplo 548) **voltam a aceitar munição** até o novo limite.
-- Funciona nas caixas que já existem e nas que aparecerem depois (verificação leve a cada 2 segundos).
-- **Não mexe** em:
-  - caixas pequenas (`ammo_box_22`, `ammo_box_9mm`, etc.);
-  - capacidade de munição do jogador (isso é do mod *Configurable Capacity*);
-  - conteúdo inicial das caixas encontradas no mundo;
-  - caixas que já estão acima do novo limite: elas não perdem munição, só não aceitam mais.
+- Replaces the big boxes' limit of 500 with the value you choose.
+- **Hard limit**: when merging boxes, ammo only moves up to the limit. **Whatever is left stays in the box in your hand**, which does not disappear. If the box in your hand is emptied, it disappears as in the normal game.
+- Boxes already above 500 (548, for example) **accept ammo again**, up to the new limit.
+- Works on boxes that already exist and on boxes that appear later (a light check every 2 seconds).
+- **Does not touch**:
+  - small boxes (`ammo_box_22`, `ammo_box_9mm`, etc.);
+  - the player's ammo capacity (that is what the *Configurable Capacity* mod is for);
+  - the starting contents of boxes found in the world;
+  - boxes already above the new limit: they keep their ammo, they just do not accept more.
 
-## Instalação
+## Installation
 
-1. Precisa do **BepInEx 5** instalado no jogo.
-2. Baixe o `AmmoBoxCapacity-<versão>.zip` em [Releases](https://github.com/bgelatti/AmmoBoxCapacity/releases) e extraia a pasta `AmmoBoxCapacity` para `Apocalypter\BepInEx\plugins\`.
-3. Abra o jogo uma vez para criar o arquivo de configuração.
+1. You need **BepInEx 5** installed in the game.
+2. Download `AmmoBoxCapacity-<version>.zip` from [Releases](https://github.com/bgelatti/AmmoBoxCapacity/releases) and extract the `AmmoBoxCapacity` folder into `Apocalypter\BepInEx\plugins\`.
+3. Start the game once to create the config file.
 
-## Configuração
+## Configuration
 
-Arquivo `BepInEx\config\com.gelatti.apocalypter.ammoboxcapacity.cfg` (também aparece no **Apocasetter**):
+File `BepInEx\config\com.gelatti.apocalypter.ammoboxcapacity.cfg` (also shown in **Apocasetter**):
 
-| Opção | Padrão | O que faz |
+| Option | Default | What it does |
 |---|---|---|
-| `[General] Enabled` | `true` | Desligado = limite original do jogo (500). |
-| `[General] Multiplier` | `1` | Multiplica o limite original (500) nos calibres que estão com 0. Ex.: `4` = 2000. |
-| `[General] MaxPerBox_22` | `0` | Número exato para a caixa grande de .22. `0` = original x Multiplier. |
-| `[General] MaxPerBox_9mm` | `0` | Idem para 9mm. |
-| `[General] MaxPerBox_556mm` | `0` | Idem para 5.56mm. |
-| `[General] MaxPerBox_762mm` | `0` | Idem para 7.62mm. |
-| `[General] MaxPerBox_3006` | `0` | Idem para .30-06. |
-| `[General] MaxPerBox_12gauge` | `0` | Idem para 12 gauge. |
-| `[General] MaxPerBox_20gauge` | `0` | Idem para 20 gauge. |
-| `[General] MaxPerBox_arrow` | `0` | Idem para flechas. |
+| `[General] Enabled` | `true` | Off = the game's original limit (500). |
+| `[General] Multiplier` | `1` | Multiplies the original limit (500) for every caliber set to 0. E.g. `4` = 2000. |
+| `[General] MaxPerBox_22` | `0` | Exact number for the big .22 box. `0` = original x Multiplier. |
+| `[General] MaxPerBox_9mm` | `0` | Same for 9mm. |
+| `[General] MaxPerBox_556mm` | `0` | Same for 5.56mm. |
+| `[General] MaxPerBox_762mm` | `0` | Same for 7.62mm. |
+| `[General] MaxPerBox_3006` | `0` | Same for .30-06. |
+| `[General] MaxPerBox_12gauge` | `0` | Same for 12 gauge. |
+| `[General] MaxPerBox_20gauge` | `0` | Same for 20 gauge. |
+| `[General] MaxPerBox_arrow` | `0` | Same for arrows. |
 
-Exemplo: `MaxPerBox_556mm = 3000` faz a caixa grande de 5.56 guardar até 3000, e os outros calibres seguem o `Multiplier`.
+Example: `MaxPerBox_556mm = 3000` lets the big 5.56 box hold up to 3000, and the other calibers follow `Multiplier`.
 
-As mudanças valem na hora, sem reiniciar. Nas caixas vistas até hoje só existem versões grandes de 12 gauge, 5.56, 7.62 e .30-06. As outras entradas só têm efeito se o jogo tiver caixa grande desse calibre.
+Changes take effect immediately, without a restart. Only big boxes for 12 gauge, 5.56, 7.62 and .30-06 have been seen so far. The other entries only matter if the game has a big box for that caliber.
 
-No `LogOutput.log` o mod mostra, ao iniciar, a configuração de cada calibre. Ao encontrar a primeira caixa de cada calibre, mostra o **limite original lido do jogo** e o **novo limite**, por exemplo `[box] 556mm: original limit 500, new limit 3000`.
+At startup the mod writes the settings for each caliber to `LogOutput.log`. When it finds the first box of each caliber, it writes the **original limit read from the game** and the **new limit**, for example `[box] 556mm: original limit 500, new limit 3000`.
 
-## Aviso: faça backup do save
+## Warning: back up your save
 
-A munição das caixas é salva junto com o jogo. **Se você remover o mod**, caixas acima de 500 **não perdem munição**, mas ficam "cheias" e não aceitam mais nada até baixarem de 500. Mesmo assim, **faça backup do save** antes de instalar ou remover o mod.
+Box ammo is saved with the game. **If you remove the mod**, boxes above 500 **keep their ammo**, but they are "full" and accept nothing until they drop below 500. Still, **back up your save** before installing or removing the mod.
 
-## Compilar
+## Building
 
 ```
 dotnet build -c Release
 ```
 
-O build Release monta `release\AmmoBoxCapacity\` com a DLL, este README, o LICENSE e o CHANGELOG, pronta para copiar para `BepInEx\plugins`. Use `-p:GamePath="..."` se o jogo estiver em outra pasta. Com `-p:CopyToGame=true` a DLL e o README também são copiados direto para `BepInEx\plugins\AmmoBoxCapacity`.
+The Release build fills `release\AmmoBoxCapacity\` with the DLL, this README, the LICENSE and the CHANGELOG, ready to copy into `BepInEx\plugins`. Use `-p:GamePath="..."` if the game is installed somewhere else. With `-p:CopyToGame=true` the DLL and the README are also copied straight into `BepInEx\plugins\AmmoBoxCapacity`.
 
-### Build de testes (Debug)
+### Test build (Debug)
 
 ```
 dotnet build -c Debug -p:CopyToGame=true
 ```
 
-O build Debug inclui as ferramentas de diagnóstico (`src/Diagnostics.cs`), que **não entram no Release**. Elas ficam na seção `[Debug]` da config:
+The Debug build includes the diagnostics tools (`src/Diagnostics.cs`), which are **not part of the Release build**. They live in the `[Debug]` section of the config:
 
-- **F9** (`DumpKey`): olhando para uma caixa, grava no log todas as FSMs dela e passa a registrar as mudanças das variáveis.
-- **F10** (`DumpGameManagerKey`): grava as FSMs do `__GameManager__`.
-- `LogActions` (desligado): registra ações int/float das FSMs de munição. Só vale depois de reiniciar o jogo e deixa o jogo um pouco mais lento.
+- **F9** (`DumpKey`): while looking at a box, writes all of its FSMs to the log and then logs every change to its variables.
+- **F10** (`DumpGameManagerKey`): writes the FSMs of `__GameManager__`.
+- `LogActions` (off): logs int/float actions of the ammo FSMs. Takes effect only after restarting the game, and slows the game down a little.
 
-O Debug também registra cada transferência entre caixas, as caixas pequenas ignoradas e os limites novos a cada mudança na config.
+The Debug build also logs every transfer between boxes, the small boxes it skips and the new limits after each config change.
